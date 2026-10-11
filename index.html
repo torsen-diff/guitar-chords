@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guitar chord maker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Guitar chord maker</h1>
+    <!-- form -->
+    <form action="" onsubmit="return false">
+        <label for="notes">Type each note here, separate them using spacebar: </label>
+        <input type="text" name="notes" id="notes"><br>
+        
+        <button id="submit" onclick="placeNotes()">Submit</button>
+    </form>
+    <!-- fretboard -->
+    <table>
+        <tr id="first_string">
+            <th>e</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr id="second_string">
+            <th>h</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr id="third_string">
+            <th>g</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr id="fourth_string">
+            <th>d</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr id="fifth_string">
+            <th>a</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr id="sixth_string">
+            <th>e</th>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+    </table>
+<script defer>
+    // arrays with notes for each string
+    let first_string = new Array("e","f","f#","g","g#","a","a#","h","c","c#","d","d#","e");
+    let second_string = new Array("h","c","c#","d","d#","e","f","f#","g","g#","a","a#","h");
+    let third_string = new Array("g","g#","a","a#","h","c","c#","d","d#","e","f","f#","g");
+    let fourth_string = new Array("d","d#","e","f","f#","g","g#","a","a#","h","c","c#","d");
+    let fifth_string = new Array("a","a#","h","c","c#","d","d#","e","f","f#","g","g#","a");
+    let sixth_string = new Array("e","f","f#","g","g#","a","a#","h","c","c#","d","d#","e");
+
+    // notes to later change into string notes
+    let white_notes = new Array("c","d","e","f","g","a","h");
+    let white_notes_sharp = new Array("h#","c##","d##","e#","f##","g##","a##");
+    let white_notes_flat = new Array("dbb","ebb","fb","gbb","abb","hbb","cb");
+    
+    let black_notes = new Array("c#","d#","f#","g#","a#");
+    let black_notes_flat = new Array("db","eb","gb","ab","b");
+
+    // all_notes is for default string notes, every_note is for every note
+    let all_notes = white_notes.concat(black_notes);
+    let every_note = white_notes.concat(white_notes_sharp, white_notes_flat, black_notes, black_notes_flat);
+
+
+    let submit = document.querySelector("#submit");
+    let text_notes = document.querySelector("#notes");
+
+    function placeNotes(){
+        // removing from each td "active_note" class
+        td_array = document.querySelectorAll("td");
+        th_array = document.querySelectorAll("th");
+        td_array.forEach(td => {
+            td.classList.remove("active_note");
+            td.innerText = "";
+        });
+        th_array.forEach(th => {
+            th.classList.remove("active_note");
+        });
+        
+        // creating array with notes
+        notes = text_notes.value.split(" ");
+
+        // filtering notes, the only thing I used Ai for, and I feel bad for it
+        for (let i = notes.length - 1; i >= 0; i--) {
+            if (every_note.indexOf(notes[i]) === -1) {
+                notes.splice(i, 1);
+            }
+        }
+        // coping notes into another array that won't be modified, this will be important for showing notes as a text on fretboard
+        notes2 = [...notes];
+        
+        // changes all flat and double sharp notes into notes that are declared on top arrays
+        notes.forEach((note , index_of_note) => {
+
+            if(all_notes.indexOf(note) == -1){
+                
+                if(white_notes_sharp.indexOf(note) != -1){
+                    notes[index_of_note] = white_notes[white_notes_sharp.indexOf(note)];
+                }
+                else if(white_notes_flat.indexOf(note) != -1){
+                    notes[index_of_note] = white_notes[white_notes_flat.indexOf(note)];
+                }
+                else if(black_notes_flat.indexOf(note) != -1){
+                    notes[index_of_note] = black_notes[black_notes_flat.indexOf(note)];
+                }
+            }
+        });
+
+
+
+        // showing notes on fretboard
+        notes.forEach((note, index_of_note) => {
+            first_string_note = first_string.lastIndexOf(note);        
+            second_string_note = second_string.lastIndexOf(note);
+            third_string_note = third_string.lastIndexOf(note);
+            fourth_string_note = fourth_string.lastIndexOf(note);
+            fifth_string_note = fifth_string.lastIndexOf(note);
+            sixth_string_note = sixth_string.lastIndexOf(note);
+            
+
+            // open strings, I didn't had any other idea on how to do this so I just made bunch of if statements, very creative
+            if(first_string.indexOf(note) == 0){
+                document.querySelector("#first_string > th").classList.add("active_note");
+            }
+            if(second_string.indexOf(note) == 0){
+                document.querySelector("#second_string > th").classList.add("active_note");
+            }
+            if(third_string.indexOf(note) == 0){
+                document.querySelector("#third_string > th").classList.add("active_note");
+            }
+            if(fourth_string.indexOf(note) == 0){
+                document.querySelector("#fourth_string > th").classList.add("active_note");
+            }
+            if(fifth_string.indexOf(note) == 0){
+                document.querySelector("#fifth_string > th").classList.add("active_note");
+            }
+            if(sixth_string.indexOf(note) == 0){
+                document.querySelector("#sixth_string > th").classList.add("active_note");
+            }
+
+            // frets on each string
+            first_string_active = document.querySelector(`#first_string > td:nth-of-type(${first_string_note})`);
+            second_string_active = document.querySelector(`#second_string > td:nth-of-type(${second_string_note})`);
+            third_string_active = document.querySelector(`#third_string > td:nth-of-type(${third_string_note})`);
+            fourth_string_active = document.querySelector(`#fourth_string> td:nth-of-type(${fourth_string_note})`);
+            fifth_string_active = document.querySelector(`#fifth_string > td:nth-of-type(${fifth_string_note})`);
+            sixth_string_active = document.querySelector(`#sixth_string > td:nth-of-type(${sixth_string_note})`);
+
+
+            active_string_array = new Array(first_string_active, second_string_active, third_string_active, fourth_string_active, fifth_string_active, sixth_string_active);
+
+            active_string_array.forEach(string => {
+                string.classList.add("active_note");
+                string.innerText = notes2[index_of_note];
+            });
+        });
+    
+    }
+    
+</script>
+</body>
+</html>

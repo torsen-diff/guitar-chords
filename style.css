@@ -1,0 +1,30 @@
+* {
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+td {
+    border: 1px solid black;
+    width: 80px;
+    height: 30px;
+    margin: 0;
+    text-align: center;    
+}
+
+th {
+    margin: 0;
+    text-align: center;
+    width: 40px;
+    height: 30px;
+}
+
+form {
+    margin: 30px 0;
+}
+
+form > * {
+    margin: 10px;
+}
+
+.active_note {
+    background-color: red;
+}
