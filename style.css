@@ -2,12 +2,20 @@
     font-family:Verdana, Geneva, Tahoma, sans-serif;
 }
 
-td {
-    border: 1px solid black;
-    width: 80px;
-    height: 30px;
+body {
+    padding: 15px;
+}
+
+tr.string > td, td {
+    width: 50px;
+    height: 25px;
     margin: 0;
-    text-align: center;    
+    text-align: center;
+    font-size: 14px;
+}
+
+tr.string > td {
+    border: 1px solid black;
 }
 
 th {

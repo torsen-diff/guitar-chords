@@ -8,6 +8,7 @@
 </head>
 <body>
     <h1>Guitar chord maker</h1>
+    <sub>This was made for personal use to help with learning notes on strings and to visualise chords</sub>
     <!-- form -->
     <form action="" onsubmit="return false">
         <label for="notes">Type each note here, separate them using spacebar: </label>
@@ -17,7 +18,7 @@
     </form>
     <!-- fretboard -->
     <table>
-        <tr id="first_string">
+        <tr id="first_string" class="string">
             <th>e</th>
             <td></td>
             <td></td>
@@ -31,8 +32,18 @@
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
         </tr>
-        <tr id="second_string">
+        <tr id="second_string" class="string">
             <th>h</th>
             <td></td>
             <td></td>
@@ -46,8 +57,18 @@
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
         </tr>
-        <tr id="third_string">
+        <tr id="third_string" class="string">
             <th>g</th>
             <td></td>
             <td></td>
@@ -61,8 +82,18 @@
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
         </tr>
-        <tr id="fourth_string">
+        <tr id="fourth_string" class="string">
             <th>d</th>
             <td></td>
             <td></td>
@@ -76,8 +107,18 @@
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
         </tr>
-        <tr id="fifth_string">
+        <tr id="fifth_string" class="string">
             <th>a</th>
             <td></td>
             <td></td>
@@ -91,8 +132,18 @@
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
         </tr>
-        <tr id="sixth_string">
+        <tr id="sixth_string" class="string">
             <th>e</th>
             <td></td>
             <td></td>
@@ -106,6 +157,41 @@
             <td></td>
             <td></td>
             <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        <tr id="frets">
+            <th>frets</th>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+            <td>8</td>
+            <td>9</td>
+            <td>10</td>
+            <td>11</td>
+            <td>12</td>
+            <td>13</td>
+            <td>14</td>
+            <td>15</td>
+            <td>16</td>
+            <td>17</td>
+            <td>18</td>
+            <td>19</td>
+            <td>20</td>
+            <td>21</td>
+            <td>22</td>
         </tr>
     </table>
 <script defer>
@@ -135,7 +221,7 @@
 
     function placeNotes(){
         // removing from each td "active_note" class
-        td_array = document.querySelectorAll("td");
+        td_array = document.querySelectorAll("tr.string>td");
         th_array = document.querySelectorAll("th");
         td_array.forEach(td => {
             td.classList.remove("active_note");
@@ -206,7 +292,7 @@
                 document.querySelector("#sixth_string > th").classList.add("active_note");
             }
 
-            // frets on each string
+            // from 1st to 12th fret
             first_string_active = document.querySelector(`#first_string > td:nth-of-type(${first_string_note})`);
             second_string_active = document.querySelector(`#second_string > td:nth-of-type(${second_string_note})`);
             third_string_active = document.querySelector(`#third_string > td:nth-of-type(${third_string_note})`);
@@ -214,8 +300,18 @@
             fifth_string_active = document.querySelector(`#fifth_string > td:nth-of-type(${fifth_string_note})`);
             sixth_string_active = document.querySelector(`#sixth_string > td:nth-of-type(${sixth_string_note})`);
 
+            // from 13th to 22nd fret
+            first_string_active_12 = document.querySelector(`#first_string > td:nth-of-type(${first_string_note > 10 ? first_string_note : first_string_note+12})`);
+            second_string_active_12 = document.querySelector(`#second_string > td:nth-of-type(${second_string_note > 10 ? second_string_note : second_string_note+12})`);
+            third_string_active_12 = document.querySelector(`#third_string > td:nth-of-type(${third_string_note > 10 ? third_string_note : third_string_note+12})`);
+            fourth_string_active_12 = document.querySelector(`#fourth_string> td:nth-of-type(${fourth_string_note > 10 ? fourth_string_note : fourth_string_note+12})`);
+            fifth_string_active_12 = document.querySelector(`#fifth_string > td:nth-of-type(${fifth_string_note > 10 ? fifth_string_note : fifth_string_note+12})`);
+            sixth_string_active_12 = document.querySelector(`#sixth_string > td:nth-of-type(${sixth_string_note > 10 ? sixth_string_note : sixth_string_note+12})`);
 
-            active_string_array = new Array(first_string_active, second_string_active, third_string_active, fourth_string_active, fifth_string_active, sixth_string_active);
+            active_string_array = new Array(
+                first_string_active, second_string_active, third_string_active, fourth_string_active, fifth_string_active, sixth_string_active,
+                first_string_active_12, second_string_active_12, third_string_active_12, fourth_string_active_12, fifth_string_active_12, sixth_string_active_12
+            );
 
             active_string_array.forEach(string => {
                 string.classList.add("active_note");
